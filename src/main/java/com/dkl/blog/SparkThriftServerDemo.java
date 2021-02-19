@@ -12,37 +12,20 @@ public class SparkThriftServerDemo {
 
     public static void main(String[] args) throws SQLException {
         //----------------------------------connect hive----------------------------------//
-        hiveJdbcDemo();
+        System.out.println("select from hive");
+        jdbcDemo(HIVE_JDBC_URL);
 
         //------------------------------connect spark thrift server-----------------------//
-        sparkJdbcDemo();
+        System.out.println("select from spark thrift server");
+        jdbcDemo(SPARK_JDBC_URL);
 
     }
 
-    public static void sparkJdbcDemo() throws SQLException {
+    public static void jdbcDemo(String jdbc_url) throws SQLException {
         Connection connection = null;
         try {
-            connection = DriverManager.getConnection(SPARK_JDBC_URL);
-            System.out.println("select from spark thrift server");
+            connection = DriverManager.getConnection(jdbc_url);
             selectTable(connection);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            connection.close();
-        }
-
-
-    }
-
-    public static void hiveJdbcDemo() throws SQLException {
-        Connection connection = null;
-        try {
-            Class.forName("org.apache.hive.jdbc.HiveDriver");
-            connection = DriverManager.getConnection(HIVE_JDBC_URL);
-            System.out.println("select from hive");
-            selectTable(connection);
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
