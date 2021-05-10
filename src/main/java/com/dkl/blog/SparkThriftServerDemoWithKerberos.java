@@ -74,7 +74,7 @@ public class SparkThriftServerDemoWithKerberos {
         // 初始化配置文件
         try {
             conf.set("hadoop.security.authentication", "kerberos");
-            conf.set("hadoop.security.authorization", "true");
+            System.setProperty("java.security.krb5.conf", KRB5);// krb5文件路径
             UserGroupInformation.setConfiguration(conf);
             UserGroupInformation.loginUserFromKeytab(PRINCIPAL, KEYTAB);// 入参：principal、keytab文件
         } catch (IOException ioE) {
